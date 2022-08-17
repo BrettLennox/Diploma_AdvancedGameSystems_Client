@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -792,7 +792,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -1080,6 +1080,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756815811}
   - component: {fileID: 1756815810}
+  - component: {fileID: 1756815812}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -1100,7 +1101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   s_port: 7777
-  s_ip: 103.91.193.52
+  s_ip: 127.0.0.1
 --- !u!4 &1756815811
 Transform:
   m_ObjectHideFlags: 0
@@ -1115,3 +1116,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1756815812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756815809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ab78b4ce70dc34e8f900ec5ba5cfbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localPlayerPrefab: {fileID: 617956253338201268, guid: 29f06a9e789b7ff468e03497ba253fbb, type: 3}
+  _playerPrefab: {fileID: 617956253338201268, guid: ac6639401f6805f418df3369f8578586, type: 3}
