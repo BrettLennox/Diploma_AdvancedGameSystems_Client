@@ -5,7 +5,8 @@ using System;
 
 public enum ServerToClientId : ushort
 {
-    playerSpawned = 1,
+    sync = 1,
+    playerSpawned,
     playerMovement,
 }
 
@@ -26,6 +27,10 @@ public class NetworkManager : MonoBehaviour
     private static NetworkManager _networkManagerInstance;
     [SerializeField] private ushort s_port;
     [SerializeField] private string s_ip;
+    [Space(10)]
+    [SerializeField] private ushort tickDivergenceTolerance = 1;
+    private ushort _serverTick;
+    private ushort _ticksBetweenPositionUpdates = 2;
     #endregion
     #region Properties
     public static NetworkManager NetworkManagerInstance
@@ -48,6 +53,25 @@ public class NetworkManager : MonoBehaviour
         }
     }
     public Client GameClient { get; private set; }
+    public ushort ServerTick
+    {
+        get => _serverTick;
+        set
+        {
+            _serverTick = value;
+            InterpolationTick = (ushort)(value - TicksBetweenPositionUpdates);
+        }
+    }
+    public ushort InterpolationTick { get; private set; }
+    public ushort TicksBetweenPositionUpdates
+    {
+        get => _ticksBetweenPositionUpdates;
+        set
+        {
+            _ticksBetweenPositionUpdates = value;
+            InterpolationTick = (ushort)(ServerTick - value);
+        }
+    }
     #endregion
 
     private void Awake()
@@ -70,6 +94,8 @@ public class NetworkManager : MonoBehaviour
         GameClient.ClientDisconnected += PlayerLeft;
         //Disconnect
         GameClient.Disconnected += DidDisconnect;
+
+        ServerTick = 2;
     }
     #region Events
     private void DidConnect(object sender, EventArgs e)
@@ -102,6 +128,8 @@ public class NetworkManager : MonoBehaviour
     private void FixedUpdate()
     {
         GameClient.Tick();
+
+        ServerTick++;
     }
 
     private void OnApplicationQuit()
@@ -113,5 +141,20 @@ public class NetworkManager : MonoBehaviour
     {
         //Connect to server
         GameClient.Connect($"{s_ip}:{s_port}");
+    }
+
+    private void SetTick(ushort serverTick)
+    {
+        if (Mathf.Abs(ServerTick - serverTick) > tickDivergenceTolerance)
+        {
+            Debug.Log($"Client tick: {ServerTick} -> {serverTick}");
+            ServerTick = serverTick;
+        }
+    }
+
+    [MessageHandler((ushort)ServerToClientId.sync)]
+    public static void Sync(Message message)
+    {
+        NetworkManagerInstance.SetTick(message.GetUShort());
     }
 }

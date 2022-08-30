@@ -16,14 +16,16 @@ public class Player : MonoBehaviour
 
     private string username;
 
+    [SerializeField] private Interpolator _interpolator;
+
     private void OnDestroy()
     {
         list.Remove(Id);
     }
 
-    private void Move(Vector3 newPosition, Vector3 forward)
+    private void Move(ushort tick, Vector3 newPosition, Vector3 forward)
     {
-        transform.position = newPosition;
+        _interpolator.NewUpdate(tick, newPosition);
 
         if (!IsLocal)
         {
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
     private static void PlayerMovement(Message message)
     {
         if (list.TryGetValue(message.GetUShort(), out Player player))
-            player.Move(message.GetVector3(), message.GetVector3());
+            player.Move(message.GetUShort(), message.GetVector3(), message.GetVector3());
     }
     #endregion
 }

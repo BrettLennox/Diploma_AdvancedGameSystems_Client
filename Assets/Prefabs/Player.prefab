@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3704460438759028021}
   - component: {fileID: 5433339211780672813}
   - component: {fileID: 5918513956879303707}
+  - component: {fileID: 255802899722487549}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animationManager: {fileID: 5918513956879303707}
   _camTransform: {fileID: 3097157832307760872}
+  _interpolator: {fileID: 255802899722487549}
 --- !u!114 &5918513956879303707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +64,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 2036071168612804375}
   _playerMoveSpeed: 5
+--- !u!114 &255802899722487549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617956253338201268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cacd75840dfc6743a9c3c4882d7691b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeElapsed: 0
+  _timeToReachTarget: 0.05
+  _movementThreshold: 0.05
 --- !u!1 &1626021071173234163
 GameObject:
   m_ObjectHideFlags: 0
